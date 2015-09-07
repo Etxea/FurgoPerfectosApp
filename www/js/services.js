@@ -1,47 +1,37 @@
 angular.module('starter.services', [])
-
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'https://pbs.twimg.com/profile_images/598205061232103424/3j5HUXMY.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'https://pbs.twimg.com/profile_images/578237281384841216/R3ae1n61.png'
-  }];
-
+// Might use a resource here that returns a JSON array
+.factory('FurgoPerfectos', function($http) {
+  var fps = [] ;
+  
+  
+    
   return {
     all: function() {
-      return chats;
+        console.log("Vamos a bajarnos los FPs");
+        $http.get("http://www.furgovw.org/api.php?getEverything=&withoutBody=").
+            then(function(response) {
+                console.log("Hemos recibido la respuesta",response.status);
+                data = response.data;                
+                fps = data;
+                console.log("Los tenemos?");
+                console.log(fps[0].nombre);
+                return fps;
+            }, function(response,status) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+                console.log("Error descargando los FPs");
+                console.log(response);
+                console.log(response.status);
+                fps = [{"nombre":"error de conexion"}]
+                return fps;
+                
+            });
+            
     },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+    get: function(fpId) {
+      for (var i = 0; i < fps.length; i++) {
+        if (fps[i].id === parseInt(fpId)) {
+          return fps[i];
         }
       }
       return null;
