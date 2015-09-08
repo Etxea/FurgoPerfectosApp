@@ -3,32 +3,31 @@ angular.module('starter.services', [])
 .factory('FurgoPerfectos', function($http) {
   var fps = [] ;
   
+  console.log("Somos el service FurgoPerfectos");
   
     
   return {
-    all: function() {
-        console.log("Vamos a bajarnos los FPs");
-        $http.get("http://www.furgovw.org/api.php?getEverything=&withoutBody=").
+      
+      all: function() {
+        
+        return $http.get("http://www.furgovw.org/api.php?getEverything=&withoutBody=").
             then(function(response) {
-                console.log("Hemos recibido la respuesta",response.status);
-                data = response.data;                
-                fps = data;
-                console.log("Los tenemos?");
-                console.log(fps[0].nombre);
-                return fps;
-            }, function(response,status) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-                console.log("Error descargando los FPs");
-                console.log(response);
-                console.log(response.status);
-                fps = [{"nombre":"error de conexion"}]
-                return fps;
-                
-            });
+                console.log("Hemos recibido la respuesta de la API",response.status);
+                return response.data;
             
-    },
-    get: function(fpId) {
+        }, function(response,status) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            console.log("Error descargando los FPs");
+            console.log(response.status);
+            console.log(status);
+            return response.status;
+        }
+        );
+        
+  
+      },
+      get: function(fpId) {
       for (var i = 0; i < fps.length; i++) {
         if (fps[i].id === parseInt(fpId)) {
           return fps[i];

@@ -11,34 +11,15 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  //$scope.fps = FurgoPerfectos.all();
-  
-  console.log("Vamos a bajarnos los FPs");
-        $http.get("http://www.furgovw.org/api.php?getEverything=&withoutBody=").
-            then(function(response) {
-                console.log("Hemos recibido la respuesta",response.status);
-                data = response.data;                
-                $scope.fps = data;
-                console.log("Los tenemos?");
-                console.log($scope.fps[0].nombre);
-                
-            }, function(response,status) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-                console.log("Error descargando los FPs");
-                console.log(response);
-                console.log(response.status);
-                $scope.fps = [{"nombre":"error de conexion"}]
-                
-                
-            });
-  
-  console.log("Pasado al scope?");
+  FurgoPerfectos.all().then(function(lista){
+      console.log("Hemos obtenido la lista en elcontroller")
+      $scope.fps = lista;
+    });
   
 })
 
 .controller('DetalleCtrl', function($scope, $stateParams, FurgoPerfectos) {
-  
+    $scope.fp = FurgoPerfectos.get("1");
 })
 
 .controller('AccountCtrl', function($scope) {
