@@ -3,7 +3,7 @@ angular.module('starter.services', [])
 .factory('FurgoPerfectos', function($http) {
     console.log("Somos el service FurgoPerfectos");
     var fps = {}  ;
-    $http.get("http://www.furgovw.org/api.php?getEverything=&withoutBody=").
+    $http.get("http://www.furgovw.org/api.php?latitude=43.3518161&longitude=-3.2072419").
             then(function(response) {
                 console.log("Hemos recibido la respuesta de la API",response.status);
                 console.log("hemos leido en el service "+response.data.length+" FPs");
