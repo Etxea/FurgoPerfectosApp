@@ -6,10 +6,11 @@
 -->
 <ion-view view-title="{{fp.nombre}}">
   <ion-content class="padding">
-    <img ng-src="{{chat.face}}" style="width: 64px; height: 64px">
-    <p>
-      -- {{fp.nombre}} --
-    </p>
-    {{fp.html}}
+    <img ng-src="{{fp.imagen}}" style="width: {{fp.ancho}}px; height: {{fp.alto}}px">
+    
+    <p>Lat: {{fp.lat}}, Lon: {{fp.lng}}</p>
+    <p>{{ fp.destomtom }} icono {{fp.icono}}</p>
+    <p>fecha: {{fp.date}}</p>
+    <a href="{{fp.link}}">Para más info ver en la web</a>
   </ion-content>
 </ion-view>
