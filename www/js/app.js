@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','leaflet-directive'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -50,19 +50,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats',
+  .state('tab.lista', {
+      url: '/lista',
       views: {
-        'tab-chats': {
+        'tab-lista': {
           templateUrl: 'templates/tab-lista.html',
           controller: 'ListaCtrl'
         }
       }
     })
-    .state('tab.chat-detail', {
+    .state('tab.fp-detalle', {
       url: '/fp/:fpId',
       views: {
-        'tab-chats': {
+        'tab-lista': {
           templateUrl: 'templates/fp-detalle.html',
           controller: 'DetalleCtrl'
         }

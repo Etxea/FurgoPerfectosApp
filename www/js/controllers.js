@@ -15,8 +15,24 @@ angular.module('starter.controllers', [])
 })
 
 .controller('MapaCtrl', function($scope, FurgoPerfectos) {
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+  $scope.$on('$ionicView.enter', function(e) {
+          $scope.map = {
+          defaults: {
+            tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+            maxZoom: 18,
+            zoomControlPosition: 'bottomleft'
+          },
+          markers : {},
+          events: {
+            map: {
+              enable: ['context'],
+              logic: 'emit'
+            }
+          }
+        };
+
+        $scope.goTo(0);
+  });
   $scope.fps = FurgoPerfectos.all();
 })
 

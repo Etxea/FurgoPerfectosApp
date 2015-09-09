@@ -1,9 +1,5 @@
 <ion-view view-title="Mapa">
-  <ion-content>
-    <ion-list>
-      <ion-item class="item-icon-right" ng-repeat="fp in fps" type="item-text-wrap" href="#/tab/fp/{{fp.id}}">
-        <h2>{{fp.nombre}} ({{fp.icono}})</h2>
-      </ion-item>
-    </ion-list>
+  <ion-content class="padding">
+	  <leaflet defaults="map.defaults" center="map.center" markers="map.markers" ng-if="map"></leaflet>
   </ion-content>
 </ion-view>
