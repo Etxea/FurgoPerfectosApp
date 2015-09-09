@@ -54,7 +54,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       url: '/chats',
       views: {
         'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
+          templateUrl: 'templates/tab-lista.html',
           controller: 'ListaCtrl'
         }
       }
@@ -63,12 +63,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       url: '/fp/:fpId',
       views: {
         'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
+          templateUrl: 'templates/fp-detalle.html',
           controller: 'DetalleCtrl'
         }
       }
     })
-
+   .state('tab.mapa', {
+      url: '/mapa',
+      views: {
+        'tab-mapa': {
+          templateUrl: 'templates/tab-mapa.html',
+          controller: 'MapaCtrl'
+        }
+      }
+    })
   .state('tab.account', {
     url: '/account',
     views: {

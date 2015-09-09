@@ -11,11 +11,12 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  //~ FurgoPerfectos.all().then(function(lista){
-      //~ console.log("Hemos obtenido la lista en el controller")
-      //~ $scope.fps = lista;
-    //~ });
+  $scope.fps = FurgoPerfectos.all();
+})
 
+.controller('MapaCtrl', function($scope, FurgoPerfectos) {
+  //$scope.$on('$ionicView.enter', function(e) {
+  //});
   $scope.fps = FurgoPerfectos.all();
 })
 
