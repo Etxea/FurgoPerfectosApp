@@ -3,12 +3,15 @@ angular.module('starter.services', [])
 .factory('FurgoPerfectos', function($http) {
     console.log("Somos el service FurgoPerfectos");
     var fps = {}  ;
+    var  fp_downloaded = 0;
     $http.get("http://www.furgovw.org/api.php?latitude=43.3518161&longitude=-3.2072419").
             then(function(response) {
                 console.log("Hemos recibido la respuesta de la API",response.status);
                 console.log("hemos leido en el service "+response.data.length+" FPs");
                 console.log("Los almacenamos");
                 fps = response.data;
+                fp_downloaded=response.data.length;
+                fp_download=1;
             
         }, function(response) {
             // called asynchronously if an error occurs
@@ -17,11 +20,27 @@ angular.module('starter.services', [])
             console.log(response.status);
         }
         );
-  
-    function all() {
-        
+	function status() {
+		return {"counter": fp_downloaded}
+	}
+    function all() {        
         return fps
     };
+    function allMarkers() {
+		markers = [];
+		for (var i = 0; i < fps.length; i++) {
+			console.log("Añadiendo marker "+fps[i].id+" en "+fps[i].lat+ " "+fps[i].lng);
+			markers.push({
+                lat: parseInt(fps[i].lat),
+                lng: parseInt(fps[i].lng),
+                focus: true,
+                message: fps[i].nombre,
+                
+            })
+			};
+			return markers;
+			
+	};
     function getFp(fpId) {
           console.log("Vamos a buscar el fp "+fpId);
           
@@ -36,8 +55,10 @@ angular.module('starter.services', [])
     };
     
   return {
+		status: status,
         fps: fps,
         all: all,
+        allMarkers: allMarkers,
         getFp: getFp,
         };
 });
