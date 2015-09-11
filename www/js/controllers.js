@@ -24,7 +24,7 @@ angular.module('starter.controllers', [])
 		  $scope.center= {
             lat:  42,
             lng: -3,
-            zoom: 6
+            zoom: 12
           },
           $scope.map = {
 			  defaults: {
@@ -42,7 +42,7 @@ angular.module('starter.controllers', [])
 			  center: {
 					lat:  42,
 				lng: -3,
-				zoom: 6
+				zoom: 12
 			   }
         };
         //~ console.log("Tenemos el mapa "+$scope.map);
@@ -54,20 +54,28 @@ angular.module('starter.controllers', [])
 				//~ $scope.map.center.lat  = position.coords.latitude;
 				//~ $scope.map.center.lng = position.coords.longitude;
 				//~ $scope.map.center.zoom = 15;
+				console.log("Centramos el mapa");
 				$scope.map.center  = {
 						  lat : position.coords.latitude,
 						  lng : position.coords.longitude,
-						  zoom : 6
+						  zoom : 12
 						};
-				$scope.map.markers.now = {
-				  lat:position.coords.latitude,
-				  lng:position.coords.longitude,
-				  message: "You Are Here",
-				  focus: true,
-				  draggable: false
+				
+				console.log("Añadiendo markers");
+				//marcadores = FurgoPerfectos.allMarkers();
+				fps = FurgoPerfectos.all();
+				for (var i = 0; i < fps.length; i++) {
+					console.log("Añadiendo marker "+fps[i].id+" "+fps[i].nombre+" en "+fps[i].lat+ " "+fps[i].lng);
+					$scope.map.markers[i]={
+						lng: parseFloat(fps[i].lat),
+						lat: parseFloat(fps[i].lng),
+						focus: true,
+						message: fps[i].nombre,
+						
+					}
 				};
-				//console.log("Añadido now");
-				$scope.map.markers = FurgoPerfectos.allMarkers();
+				//~ console.log("Son "+marcadores.lenght);
+				//~ $scope.map.markers = marcadores;
 
           }, function(err) {
             // error
