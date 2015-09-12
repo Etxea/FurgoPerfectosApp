@@ -4,6 +4,15 @@ angular.module('starter.services', [])
     console.log("Somos el service FurgoPerfectos");
     var fps = {}  ;
     var  fp_downloaded = 0;
+    var icons = [
+        'http://www.furgovw.org/mapa_imagenes/furgonetikaiconozo2.png',
+        'http://www.furgovw.org/mapa_imagenes/balonrojodu6.png',
+        'http://www.furgovw.org/mapa_imagenes/balonverdese8.png',
+        '',
+        'http://www.furgovw.org/mapa_imagenes/campingnh4.png',
+        'http://www.furgovw.org/mapa_imagenes/centrocomercialdo4.jpg',
+        'http://www.furgovw.org/mapa_imagenes/campingtp.jpg'
+    ];
     $http.get("http://www.furgovw.org/api.php?latitude=43.3518161&longitude=-3.2072419").
             then(function(response) {
                 console.log("Hemos recibido la respuesta de la API",response.status);
@@ -60,5 +69,6 @@ angular.module('starter.services', [])
         all: all,
         allMarkers: allMarkers,
         getFp: getFp,
+        icons: icons,
         };
 });

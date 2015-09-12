@@ -66,12 +66,25 @@ angular.module('starter.controllers', [])
 				fps = FurgoPerfectos.all();
 				for (var i = 0; i < fps.length; i++) {
 					console.log("Añadiendo marker "+fps[i].id+" "+fps[i].nombre+" en "+fps[i].lat+ " "+fps[i].lng);
+                    console.log("Icono "+FurgoPerfectos.icons[parseInt(fps[i].icono)]);
+                    var markerHTML =
+                    '<div class="mapaFurgoperfectoSpot">' +
+                        '<h3>' +
+                            '<a target="_blank" href="' + fps[i].link + '">' + fps[i].nombre + '</a>' +
+                        '</h3>' +
+                        '<a target="_blank" href="' + fps[i].link + '">' +
+                            '<img src="' + fps[i].imagen + '">' +
+                        '</a>' +
+                        '<br>' +
+                        'A&ntilde;adido por ' + fps[i].autor;
 					$scope.map.markers[i]={
 						lng: parseFloat(fps[i].lat),
 						lat: parseFloat(fps[i].lng),
 						focus: true,
-						message: fps[i].nombre,
-						
+						title: fps[i].nombre,
+                        message: markerHTML,
+                        icon: { 'iconUrl': FurgoPerfectos.icons[parseInt(fps[i].icono)] },
+
 					}
 				};
 				//~ console.log("Son "+marcadores.lenght);
