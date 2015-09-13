@@ -39,8 +39,34 @@ angular.module('starter.controllers', [])
 				  logic: 'emit'
 				}
 			  },
+              layers: {
+                    baselayers: {
+                        osm: {
+                            name: 'OpenStreetMap',
+                            type: 'xyz',
+                            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                        }
+                    },
+                    overlays: {
+                        furpoperfectos: {
+                            name: "Furgo Perfectos",
+                            type: "markercluster",
+                            visible: true
+                        },
+                        campings: {
+                            name: "Campings",
+                            type: "markercluster",
+                            visible: true
+                        },
+                        acs: {
+                            name: "Areas Auto Caravanas",
+                            type: "markercluster",
+                            visible: true
+                        },
+                    }
+               },
 			  center: {
-					lat:  42,
+				lat:  42,
 				lng: -3,
 				zoom: 12
 			   }
@@ -78,6 +104,7 @@ angular.module('starter.controllers', [])
                         '<br>' +
                         'A&ntilde;adido por ' + fps[i].autor;
 					$scope.map.markers[i]={
+                        //~ layer : "furgoperfectos",
 						lng: parseFloat(fps[i].lat),
 						lat: parseFloat(fps[i].lng),
 						focus: true,
@@ -85,7 +112,24 @@ angular.module('starter.controllers', [])
                         message: markerHTML,
                         icon: { 'iconUrl': FurgoPerfectos.icons[parseInt(fps[i].icono)] },
 
-					}
+					};
+                    $scope.map.layers = {
+                        baselayers: {
+                        tileLayer: {
+                            name: 'OSM',
+                            url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+                            type: 'xyz',
+                            
+                        }
+                        },
+                        overlays: {
+                            furgoperfectos: {
+                                name: "furgoperfectos",
+                                type: "markercluster",
+                                visible: true
+                            }
+                        }
+                    };
 				};
 				//~ console.log("Son "+marcadores.lenght);
 				//~ $scope.map.markers = marcadores;
