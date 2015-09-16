@@ -1,12 +1,14 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, FurgoPerfectos) {
-	status=FurgoPerfectos.status();
-	console.log(status);
-	$scope.counter = status.counter;
+.controller('DashCtrl', function($scope, FurgoPerfectos, Localizacion) {
+	$scope.localizacion=Localizacion.localizacion;
+	$scope.status = FurgoPerfectos.getStatus;
+    fps = FurgoPerfectos.all(Localizacion.localizacion);
+    //$scope.fps=fps
+	$scope.counter = fps.lengt;
 	})
 
-.controller('ListaCtrl', function($scope, FurgoPerfectos) {
+.controller('ListaCtrl', function($scope, FurgoPerfectos,Localizacion) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -15,10 +17,10 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  $scope.fps = FurgoPerfectos.all();
+  $scope.fps = FurgoPerfectos.all(Localizacion.localizacion);
 })
 
-.controller('MapaCtrl', function($scope, $cordovaGeolocation, FurgoPerfectos) {
+.controller('MapaCtrl', function($scope, $cordovaGeolocation, FurgoPerfectos, Localizacion) {
 	
   $scope.$on('$ionicView.enter', function(e) {
 		  $scope.center= {
@@ -41,7 +43,7 @@ angular.module('starter.controllers', [])
 			  },
               layers: {
                     baselayers: {
-                        osm: {
+                        tileLayer: {
                             name: 'OpenStreetMap',
                             type: 'xyz',
                             url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -72,15 +74,12 @@ angular.module('starter.controllers', [])
 			   }
         };
         //~ console.log("Tenemos el mapa "+$scope.map);
-        //~ console.log("Lanzando geolocalizacion...");
+        
+        console.log("Lanzando geolocalizacion...");
         $cordovaGeolocation
           .getCurrentPosition()
           .then(function (position) {
-				console.log("Ya hemos localizado la posicion");
-				//~ $scope.map.center.lat  = position.coords.latitude;
-				//~ $scope.map.center.lng = position.coords.longitude;
-				//~ $scope.map.center.zoom = 15;
-				console.log("Centramos el mapa");
+				console.log("Ya hemos localizado la posicion, Centramos el mapa");
 				$scope.map.center  = {
 						  lat : position.coords.latitude,
 						  lng : position.coords.longitude,
@@ -89,7 +88,7 @@ angular.module('starter.controllers', [])
 				
 				console.log("Añadiendo markers");
 				//marcadores = FurgoPerfectos.allMarkers();
-				fps = FurgoPerfectos.all();
+				fps = FurgoPerfectos.all(Localizacion.localizacion);
 				for (var i = 0; i < fps.length; i++) {
 					console.log("Añadiendo marker "+fps[i].id+" "+fps[i].nombre+" en "+fps[i].lat+ " "+fps[i].lng);
                     console.log("Icono "+FurgoPerfectos.icons[parseInt(fps[i].icono)]);
@@ -113,23 +112,7 @@ angular.module('starter.controllers', [])
                         icon: { 'iconUrl': FurgoPerfectos.icons[parseInt(fps[i].icono)] },
 
 					};
-                    $scope.map.layers = {
-                        baselayers: {
-                        tileLayer: {
-                            name: 'OSM',
-                            url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-                            type: 'xyz',
-                            
-                        }
-                        },
-                        overlays: {
-                            furgoperfectos: {
-                                name: "furgoperfectos",
-                                type: "markercluster",
-                                visible: true
-                            }
-                        }
-                    };
+                    
 				};
 				//~ console.log("Son "+marcadores.lenght);
 				//~ $scope.map.markers = marcadores;
@@ -139,12 +122,8 @@ angular.module('starter.controllers', [])
             console.log("Location error!");
             console.log(err);
           });
-		console.log("Lanzado en async");
-		console.log("Markers");
-		
-
   });
-  $scope.fps = FurgoPerfectos.all();
+  //$scope.fps = FurgoPerfectos.all();
 })
 
 .controller('DetalleCtrl', function($scope, $stateParams, FurgoPerfectos) {
